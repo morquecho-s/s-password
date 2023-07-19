@@ -114,7 +114,7 @@ class Database(Table):
         try:
             values:str = self._prepareValues(values)
             # print(f"INSERT INTO {self.tableName} VALUES ({values})")
-            self.__execute(f"INSERT INTO {self.tableName} VALUES ({values})")
+            self.__execute(f"INSERT INTO `{self.tableName}` VALUES ({values})")
             return True
         except Exception as e:
             print(e)
@@ -223,10 +223,10 @@ class Database(Table):
         except Exception as e:
             return (False,e)
         
-    def delete(self,where:dict)->bool:
+    def delete(self,where:dict,concatenator:str = "and")->bool:
         try:
-            new_where = self._prepareWhere(where)
-            self.__execute(f'delete from {self.tableName} where {new_where};')
+            new_where = self._prepareWhere(where,concatenator)
+            self._execute(f'delete from `{self.tableName}` where {new_where};')
             return True
         
         except Exception as e:
