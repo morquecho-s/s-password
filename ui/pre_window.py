@@ -184,7 +184,7 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        self.button_login.setDefault(True)
+        # self.button_login.setDefault(True)
 
 
         QMetaObject.connectSlotsByName(Form)

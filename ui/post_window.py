@@ -20,11 +20,30 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(temp_widget)
         self.__init_events()
         self.load_frames()
+        self.__lock_frames()
 
     def __init_events(self)->None:
         self._ui.pushButton_2.clicked.connect(self.add_frame)
         self._ui.botonActualizar.clicked.connect(self.__restart_window)
         self._ui.botonExportar.clicked.connect(self.__export_frames_to_html)
+        self._ui.button_login.clicked.connect(lambda:self.__check_magic_word(self._ui.linePasword.text()))
+        self._ui.button_login.setShortcut("Ctrl+Space")
+
+    def __lock_frames(self)->None:
+        self._ui.right_container.setVisible(False)
+        self.__change_aspect_line(self._ui.linePasword,False)
+
+    def __unlock_frames(self):
+        self._ui.right_container.setVisible(True)
+        self.__change_aspect_line(self._ui.linePasword,True)
+
+    def __check_magic_word(self,word:str)->bool:
+        if "sarahi" in word.lower() or word.lower() == "alz":
+            self.__unlock_frames()
+            self._ui.linePasword.setText("")
+            self._ui.linePasword.setPlaceholderText("-.-")
+        else:
+            self.__lock_frames()
 
     def __change_aspect_line(self,lineEdit:QLineEdit,its_ok:bool)->None:
         if its_ok:
@@ -40,11 +59,10 @@ class MainWindow(QMainWindow):
     def validate_email(self,email:str,line_edit:QLineEdit)->bool:
         patron = r'^[\w\.-]+@[\w\.-]+\.\w+$'
         if re.match(patron, email):
-        
             returned = True
         else:
-        
             returned = False
+
         self.__change_aspect_line(line_edit,returned)
         return returned
     
