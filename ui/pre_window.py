@@ -1,12 +1,20 @@
+# -*- coding: utf-8 -*-
+
+################################################################################
+## Form generated from reading UI file 'untitledCWLsMb.ui'
+##
+## Created by: Qt User Interface Compiler version 6.4.1
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
 
 from PySide6.QtCore import (QCoreApplication, 
-    QMetaObject, QRect,
+    QMetaObject,  QRect,
     QSize, Qt)
 from PySide6.QtGui import  QCursor,QFont
 from PySide6.QtWidgets import (QFrame, QHBoxLayout, QLabel,
-    QLineEdit, QMainWindow, QPushButton, QScrollArea,
-    QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
-
+    QLineEdit, QPushButton, QScrollArea, QSizePolicy,
+    QSpacerItem, QVBoxLayout, QWidget)
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -124,6 +132,33 @@ class Ui_Form(object):
 
         self.verticalLayout_3.addWidget(self.pushButton_2)
 
+        self.frame = QFrame(self.right_container)
+        self.frame.setObjectName(u"frame")
+        self.frame.setFrameShape(QFrame.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_2 = QHBoxLayout(self.frame)
+        self.horizontalLayout_2.setSpacing(10)
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.botonActualizar = QPushButton(self.frame)
+        self.botonActualizar.setObjectName(u"botonActualizar")
+        self.botonActualizar.setCursor(QCursor(Qt.PointingHandCursor))
+
+        self.horizontalLayout_2.addWidget(self.botonActualizar)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_2.addItem(self.horizontalSpacer)
+
+        self.botonExportar = QPushButton(self.frame)
+        self.botonExportar.setObjectName(u"botonExportar")
+        self.botonExportar.setCursor(QCursor(Qt.PointingHandCursor))
+
+        self.horizontalLayout_2.addWidget(self.botonExportar)
+
+
+        self.verticalLayout_3.addWidget(self.frame)
+
         self.scrollArea = QScrollArea(self.right_container)
         self.scrollArea.setObjectName(u"scrollArea")
         sizePolicy3 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
@@ -136,7 +171,7 @@ class Ui_Form(object):
         self.scrollArea.setAlignment(Qt.AlignHCenter|Qt.AlignTop)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 495, 512))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 495, 462))
         self.verticalLayout_4 = QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
@@ -162,5 +197,7 @@ class Ui_Form(object):
         self.linePasword.setPlaceholderText(QCoreApplication.translate("Form", u":", None))
         self.button_login.setText(QCoreApplication.translate("Form", u"PushButton", None))
         self.pushButton_2.setText(QCoreApplication.translate("Form", u"agregar", None))
+        self.botonActualizar.setText(QCoreApplication.translate("Form", u"actualizar", None))
+        self.botonExportar.setText(QCoreApplication.translate("Form", u"exportar a html", None))
     # retranslateUi
 
