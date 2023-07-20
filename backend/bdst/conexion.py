@@ -24,7 +24,7 @@ class Database(Table):
         self.tableName:str = ""
         self.name:str = ""
 
-    def exportActualTable(self,dir:str)->None:
+    def exportActualTable(self,dir:str)->str:
         tabla_html = """
             <!DOCTYPE html>
 <html lang="en">
@@ -87,7 +87,7 @@ class Database(Table):
         with open(f"{dir}/{self.tableName}.html",'w') as file:
             file.write(tabla_html)
 
-            
+        
         return tabla_html
     
     def setTable(self,tableName:str)->None:

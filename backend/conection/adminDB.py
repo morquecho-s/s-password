@@ -1,10 +1,11 @@
-from backend.bdst.conexion import Database,INCREMENT,KEY,NOT_NULL
+from backend.bdst.conexion import Database,INCREMENT,KEY
 
 class AdminDatabase(Database):
     def __init__(self, _user: str, _password: str, _host: str,nameDB:str="str-16",nameTable:str = 'tss') -> None:
         super().__init__(_user, _password, _host)
         self.__name_db =  nameDB
         self.tableName = nameTable
+        self.ID_PROPERTY = "id"
         self.EMAIL_PROPERTY = "mail"
         self.PASSWORD_PROPERTY = "pass"
         self.GROUP_PROPERTY = "group"
@@ -29,7 +30,7 @@ class AdminDatabase(Database):
         try:
             self.createTable(
                 self.tableName,
-                (("id",int,f"{KEY} {INCREMENT}"),
+                ((self.ID_PROPERTY,int,f"{KEY} {INCREMENT}"),
                 (self.EMAIL_PROPERTY,str,""),
                  (self.PASSWORD_PROPERTY,str,""),
                  (self.GROUP_PROPERTY,str,""),),
@@ -58,11 +59,13 @@ class AdminDatabase(Database):
 
     def get_frames(self)->list:
         self.setTable(self.tableName)
-        return self.selectC((self.EMAIL_PROPERTY,self.PASSWORD_PROPERTY,self.GROUP_PROPERTY))
+        return self.selectC((self.EMAIL_PROPERTY,self.PASSWORD_PROPERTY,self.GROUP_PROPERTY,self.ID_PROPERTY))
     
-    def delete_frame(self,email:str,password:str,group:str)->bool:
+    def delete_frame(self,email:str,password:str,group:str,id:int = None)->bool:
         self.setTable(self.tableName)
         delete = {self.EMAIL_PROPERTY:email,self.PASSWORD_PROPERTY:password,self.GROUP_PROPERTY:group}
+        if not id == None:
+            delete[self.ID_PROPERTY] = id
         return self.delete(delete)
     
 torres = AdminDatabase(
@@ -71,4 +74,7 @@ torres = AdminDatabase(
     "localhost"
 )
 
-#! relleno para llegar a la linea 60 :]
+
+
+
+#! relleno para llegar a la linea 80 :]

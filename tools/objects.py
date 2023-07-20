@@ -1,10 +1,12 @@
 from PySide6.QtWidgets import QWidget
-from PySide6.QtCore import (QRect,QSize, Qt)
+from PySide6.QtCore import (QRect,QSize, Qt,Signal)
 from PySide6.QtGui import (QCursor)
 from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,QPushButton, QSizePolicy, QWidget)
+from backend.conection import conect
 
 class Frame(QWidget):
-    def __init__(self,email:str = "example email",password:str = "example password")->None:
+    isDeleted = Signal()
+    def __init__(self,email:str = "example email",password:str = "example password",id:int = None,group:str="none")->None:
         super().__init__()
         self.frame = QFrame(self)
         self.setObjectName(u"frame")
@@ -37,6 +39,20 @@ class Frame(QWidget):
 
         self.horizontalLayout_2.addWidget(self.label_2)
 
+        self.label3 = QLabel()
+        self.label3.setObjectName(u"label_3")
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(3)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label3.sizePolicy().hasHeightForWidth())
+        self.label3.setSizePolicy(sizePolicy)
+        self.label3.setAlignment(Qt.AlignCenter)
+        self.label3.setWordWrap(True)
+        self.label3.setTextInteractionFlags(Qt.TextSelectableByMouse)
+
+        self.horizontalLayout_2.addWidget(self.label3)
+
+
         self.boton = QPushButton()
         self.boton.setObjectName(u"pushButton")
         sizePolicy1 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
@@ -53,8 +69,15 @@ class Frame(QWidget):
         #! propiedades
         self.__email:str = email
         self.__password:str = password
+        self.__id:int = id
+        self.__group:str = group
         self.setEmail(self.__email)
         self.setPassword(self.__password)
+        self.setGroup(self.__group)
+        self.__init_events()
+
+    def __init_events(self)->None:
+        self.boton.clicked.connect(self.__delete_frame)
 
     def setEmail(self, email:str)->None:
         self.label.setText(email)
@@ -63,6 +86,21 @@ class Frame(QWidget):
     def setPassword(self,password:str)->None:
         self.label_2.setText(password)
         self.__password = password
+
+    def setGroup(self,group:str)->None:
+        self.label3.setText(group)
+        self.__group = group
+
+    def __delete_frame(self)->None:
+        request = conect.template_request.copy()
+        request[conect.HEAD][conect.TYPE] = conect.DELETE
+        request[conect.CONTENT][conect.EMAIL] = self.__email
+        request[conect.CONTENT][conect.PASSWORD] = self.__password
+        request[conect.CONTENT][conect.GROUP] = self.__group
+        if not self.__id == None:
+            request[conect.CONTENT][conect.ID] = str(self.__id)
+        conect.request(request)
+        self.isDeleted.emit()
 
 
 if __name__ == "__main__":
